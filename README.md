@@ -1,2 +1,2 @@
 # programmingLanguages
-training for implementation programming languages 
+training for implementing some programming languages 

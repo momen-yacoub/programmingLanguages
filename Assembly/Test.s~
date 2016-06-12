@@ -1,0 +1,74 @@
+.data
+
+endl: .asciiz "/n"
+str: .asciiz "ABCD"
+
+.text
+
+next_permutaion:
+addi $s2, $s0, 0
+lb $t0, 1($s2)
+lb $s1, ($s0)
+
+bnez $t0, ret
+syscall
+jr $ra
+ret:
+
+beqz $t0, exit
+		
+lb $t0, ($s2)
+lb $s1, ($s0)
+
+sb $s1, ($s2)
+sb $t0, ($s0)
+
+addi $sp, $sp, -12
+sw $ra, ($sp)
+addi $sp, $sp, -12
+sw $s0, ($sp)
+addi $sp, $sp, -12
+sw $s2, ($sp)
+addi $s0, $s0, 1
+		
+jal next_permutaion
+
+lw $s2, ($sp)
+addi $sp, $sp, 12
+lw $s0, ($sp)
+addi $sp, $sp, 12
+lw $ra, ($sp)
+addi $sp, $sp, 12
+		
+lb $t0, ($s2)
+lb $s1, ($s0)	
+
+sb $s1, ($s2)
+sb $t0, ($s0)
+
+addi $s2, $s2, 1
+lb $t0, 1($s2)
+j ret
+
+exit:
+jr $ra
+
+
+
+.globl main
+main:
+la $a0, str
+li $v0, 8
+syscall
+
+la $s0, str
+li $v0,4
+
+jal next_permutaion
+
+li $v0, 10
+syscall
+.end main
+
+
+

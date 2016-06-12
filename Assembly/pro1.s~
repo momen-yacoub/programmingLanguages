@@ -1,0 +1,31 @@
+.data #here we declare variables
+endl:  .asciiz "\n"
+
+.text #here we write the instructions
+
+.globl main
+main:
+	li $v0, 6
+	syscall
+
+	add.s $f1, $f1, $f0	#put lenght in $f1
+	li $v0, 6 		
+	syscall			#put the width in $f0
+
+	add.s $f12, $f1, $f0
+	li.s $f2, 2.0
+	mul.s $f12, $f12, $f2	#the circumference
+	li $v0, 2
+	syscall		#print the circumference
+
+	la $a0, endl	
+	li $v0,4
+	syscall		#print new line
+
+	mul.s $f12, $f1, $f0
+	li $v0, 2
+	syscall		#print the area
+
+	li $v0, 10
+	syscall
+.end main
